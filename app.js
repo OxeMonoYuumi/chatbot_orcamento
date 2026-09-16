@@ -3,7 +3,7 @@ const SUPABASE_URL = "https://fwcjthjvvzfkbamduwsb.supabase.co";
 const SUPABASE_KEY = "sb_publishable_9X3EpYORfe7FFwJ4Q3wO9A_HknBMuXp";
 
 // Inicializa o cliente do Supabase
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Elementos da UI
 const chatMessages = document.getElementById('chat-messages');
@@ -66,7 +66,7 @@ function removeTypingIndicator() {
 async function fetchGroqResponse(messages) {
     try {
         // Chama a Edge Function 'chat-groq'
-        const { data, error } = await supabase.functions.invoke('chat-groq', {
+        const { data, error } = await supabaseClient.functions.invoke('chat-groq', {
             body: { messages: messages }
         });
 
