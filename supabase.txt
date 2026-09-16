@@ -1,0 +1,15 @@
+dgKJJJfEWoAVm3YT
+
+API Groq:
+
+[COLE SUA CHAVE AQUI]
+
+Tabela de Preço:
+
+-------------------------
+|Serviço        | Preço |
+|---------------|-------|
+|Parede Lisa    |  120  |
+|Parede Textura |  180  |
+|Teto           |  100  |
+-------------------------
