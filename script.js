@@ -1,7 +1,7 @@
 // Configuração do Supabase
 // Substitua pelas suas credenciais reais
 const SUPABASE_URL = 'https://fwcjthjvvzfkbamduwsb.supabase.co';
-const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANONIMA_AQUI';
+const SUPABASE_ANON_KEY = 'sb_publishable_9X3EpYORfe7FFwJ4Q3wO9A_HknBMuXp';
 
 const chatMessages = document.getElementById('chat-messages');
 const userInput = document.getElementById('user-input');
