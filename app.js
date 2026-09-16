@@ -3,7 +3,13 @@ const SUPABASE_URL = "https://fwcjthjvvzfkbamduwsb.supabase.co";
 const SUPABASE_KEY = "sb_publishable_9X3EpYORfe7FFwJ4Q3wO9A_HknBMuXp";
 
 // Inicializa o cliente do Supabase
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let supabaseClient = null;
+try {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log("Supabase inicializado com sucesso!");
+} catch (e) {
+    console.error("Erro ao inicializar o Supabase:", e);
+}
 
 // Elementos da UI
 const chatMessages = document.getElementById('chat-messages');
@@ -65,6 +71,11 @@ function removeTypingIndicator() {
 // Faz requisição para a IA chamando nossa Edge Function segura no Supabase
 async function fetchGroqResponse(messages) {
     try {
+        if (!supabaseClient) {
+            throw new Error("Supabase não foi inicializado corretamente.");
+        }
+        
+        console.log("Enviando para Edge Function...");
         // Chama a Edge Function 'chat-groq'
         const { data, error } = await supabaseClient.functions.invoke('chat-groq', {
             body: { messages: messages }
@@ -84,6 +95,7 @@ async function fetchGroqResponse(messages) {
 
 // Ação de envio de mensagem
 async function handleSend() {
+    console.log("Botão de enviar clicado/Enter pressionado");
     const text = chatInput.value.trim();
     if (!text) return;
 
