@@ -1,14 +1,39 @@
-// Configuração do Supabase
-// Substitua pelas suas credenciais reais
-const SUPABASE_URL = 'https://fwcjthjvvzfkbamduwsb.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_9X3EpYORfe7FFwJ4Q3wO9A_HknBMuXp';
+// Variáveis globais para armazenar as configurações
+let SUPABASE_URL = '';
+let SUPABASE_ANON_KEY = '';
 
 const chatMessages = document.getElementById('chat-messages');
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 
+// Desabilita os inputs até carregarmos as configurações
+userInput.disabled = true;
+sendButton.disabled = true;
+
 // Histórico de mensagens para enviar ao backend
 let conversationHistory = [];
+
+// Função para buscar as credenciais via Cloudflare Pages Function
+async function loadConfig() {
+    try {
+        const response = await fetch('/api/config');
+        if (!response.ok) throw new Error('Falha ao carregar configurações');
+        
+        const data = await response.json();
+        SUPABASE_URL = data.SUPABASE_URL;
+        SUPABASE_ANON_KEY = data.SUPABASE_ANON_KEY;
+        
+        // Habilita o chat
+        userInput.disabled = false;
+        sendButton.disabled = false;
+    } catch (error) {
+        console.error('Erro de configuração:', error);
+        addMessageToUI('Sistema indisponível no momento. Erro ao carregar configurações de servidor.', 'bot');
+    }
+}
+
+// Inicializa a configuração assim que a página carregar
+window.addEventListener('DOMContentLoaded', loadConfig);
 
 function addMessageToUI(message, sender) {
     const messageDiv = document.createElement('div');
